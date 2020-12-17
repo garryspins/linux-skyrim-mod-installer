@@ -1,0 +1,158 @@
+#!/bin/python
+import os
+import shutil
+from sys import argv
+
+# Install Dependancies
+# I know i should be using requirements.txt or whatever but idc
+try:
+	import py7zr
+except Exception as e:
+	print("Installing Needed Dependancies, Please Rerun when Finished")
+	os.system("pip install py7zr")
+	exit()
+
+# Help
+col,lin = os.get_terminal_size() 
+if "-h" or "--help" in argv:
+	if col < 87:
+		print(r"    ═══════════════════════════════════════════════════")
+		print(r"          ___       ___           ___                  ")
+		print(r"         /\__\     /\  \         /\__\          ___    ")
+		print(r"        ///  /    //\\  \       //||  |        /\  \   ")
+		print(r"       ///  /    ///\\\  \     //|||  |        \\\  \  ")
+		print(r"      ///  /    _\\\-\\\  \   ///|||__|__      //\\__\ ")
+		print(r"     ///__/    /\ \\\ \\\__\ /// |||||\__\  __///\/__/ ")
+		print(r"     \\\  \    \\\ \\\ \/__/ \/__/--///  / /\///  /    ")
+		print(r"      \\\  \    \\\ \\\__\         ///  /  \\//__/     ")
+		print(r"       \\\  \    \\\///  /        ///  /    \\\__\     ")
+		print(r"        \\\__\    \\//  /        ///  /      \/__/     ")
+		print(r"         \/__/     \/__/         \/__/                 ")
+		print(r"                                                       ")
+		print(r"    ═══════════════════════════════════════════════════")
+		print("\n\n")
+		print(("    Linux Skyrim Mod Installer"))
+		print(("    Written by Orion"))
+		print(("    V1"))
+		print()
+		print(("    Just give the location of a .7z file (Skyrim Mod) and itll install it for you"))
+		print(("    Run install.sh as root to add it to your path"))
+		print()
+		print(("    For Environment Variables, Read the source code its that simple"))
+		print()
+		print(("    Contact"))
+		print(("    Email - orionspersonal1954@gmail.com"))
+		print(("    Github - https://github.com/garryspins"))
+		print()
+	else:
+		print(r"═══════════════════════════════════════════════════".center(col))
+		print(r"      ___       ___           ___                  ".center(col))
+		print(r"     /\__\     /\  \         /\__\          ___    ".center(col))
+		print(r"    ///  /    //\\  \       //||  |        /\  \   ".center(col))
+		print(r"   ///  /    ///\\\  \     //|||  |        \\\  \  ".center(col))
+		print(r"  ///  /    _\\\-\\\  \   ///|||__|__      //\\__\ ".center(col))
+		print(r" ///__/    /\ \\\ \\\__\ /// ||////__\  __///\/__/ ".center(col))
+		print(r" \\\  \    \\\ \\\ \/__/ \/__/--///  / /\///  /    ".center(col))
+		print(r"  \\\  \    \\\ \\\__\         ///  /  \\//__/     ".center(col))
+		print(r"   \\\  \    \\\///  /        ///  /    \\\__\     ".center(col))
+		print(r"    \\\__\    \\//  /        ///  /      \/__/     ".center(col))
+		print(r"     \/__/     \/__/         \/__/                 ".center(col))
+		print(r"                                                   ".center(col))
+		print(r"═══════════════════════════════════════════════════".center(col))
+		print("\n\n")
+		print(("Linux Skyrim Mod Installer").center(col))
+		print(("Written by Orion").center(col))
+		print(("V1").center(col))
+		print()
+		print(("Just give the location of a .7z file (Skyrim Mod) and itll install it for you").center(col))
+		print(("Run install.sh as root to add it to your path").center(col))
+		print()
+		print(("For Environment Variables, Read the source code its that simple").center(col))
+		print()
+		print(("Contact").center(col))
+		print(("Email - orionspersonal1954@gmail.com").center(col))
+		print(("Github - https://github.com/garryspins").center(col))
+	exit()
+
+# Check files given in args and cache them
+filesto = []
+if len(argv) == 1:
+	print("\n  Please give Valid Files to install\n")
+	exit()
+else:
+	for v in argv[1:]:
+		if os.path.isfile(v):
+			filesto.append(v)
+		else:
+			print("  Skipping invalid file \""+v+"\"")
+
+if len(filesto) == 0:
+	print("\n  Please give Valid Files to install\n")
+	exit()
+
+# Home Directory
+# Nothing Important, just the home dir
+homedir        = str(os.environ.get("HOME"))
+
+# Skyrim Version
+# AKA Normal or Special Edition
+# 1 : Special Edition
+# 2 : Normal
+skyrim_version = int(os.environ.get("LSMI_VERSION",1))
+
+# Temporary Directory
+skyrim_tempdir = os.environ.get("LSMI_TEMP",homedir+"/.lsmi/")
+
+# Skyrim Directory
+# Override the directory to look for Skyrim
+skyrim_direct  = os.environ.get("LSMI_DIRECTORY",homedir+"/.steam/steam/steamapps/common/")
+
+# Valid Skyrim Directory?
+def validSkyrim(dirr):
+	return os.path.isdir(dirr) and os.path.isdir(dirr+"/Data/") 
+
+# Temporary Folder Check
+if not os.path.isdir(skyrim_tempdir):
+	print("Creating Directory \""+skyrim_tempdir+"\"")
+	os.mkdir(skyrim_tempdir)
+
+try:
+	if __name__ == "__main__":
+		skdir = skyrim_direct
+		if skyrim_version == 2:
+			skdir = os.path.join(skyrim_direct,"Skyrim Special Edition/")
+		elif skyrim_version == 1:
+			skdir = os.path.join(skyrim_direct,"Skyrim/")
+		else:
+			print("\n  Invalid Skyrim Version Given, Defaulting to Special Edition\n")
+			skdir = os.path.join(skyrim_direct, "Skyrim Special Edition/")
+
+		if not validSkyrim(skdir):
+			print("\n  Invalid Skyrim Directory, Not Installing Mod(s)!\n  Make sure you have the correct directory set and correct version set (LSMI_DIRECTORY and LSMI_VERSION Environment Variables)\n")
+
+		print("Extracting To "+skdir)
+		for file in filesto:
+			if os.path.splitext(file)[1] != ".7z":
+				print("  Skipping "+file)
+				continue
+			obj = py7zr.SevenZipFile(file)
+			# Keep in mind i dont know how skyrim mods even work so /shrug
+			if "data" in obj.getnames():
+				print("Extracting Mod \""+file+"\", Contains "+str(len(obj.getnames()))+" Files (temp)")
+				obj.extract(skyrim_tempdir)
+				for f in os.listdir(skyrim_tempdir+"/data/"):
+					try:
+						shutil.move(skyrim_tempdir+"/data/"+f, skdir)
+					except:
+						print("Already Existent Mod, Skipping "+f+" in "+file)
+					try: shutil.rmtree(skyrim_tempdir+"/data/")
+					except: pass
+			else:
+				print("Extracting Mod \""+file+"\", Contains "+str(len(obj.getnames()))+" Files")
+				obj.extract(skdir+"/Data/")
+
+
+			obj.close()
+
+except KeyboardInterrupt:
+	print("Force Exiting")
