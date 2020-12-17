@@ -10,3 +10,4 @@ if [ "$EUID" -ne 0 ]
 fi
 
 cp lsmi /usr/local/bin/
+chmod +x /usr/local/bin/lsmi
