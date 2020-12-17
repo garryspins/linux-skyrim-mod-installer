@@ -3,6 +3,8 @@ Skyrim Mod installer for Linux
 ### THIS ISNT ACTUALLY DESIGNED FOR REAL USE
 ### THIS ONLY WORKS ON 2 TYPES OF MODS
 
+<details>
+  <summary>Installation</summary>
 ### Installation
 Open up a terminal and type
 `git clone https://github.com/garryspins/linux-skyrim-mod-installer.git`
@@ -13,6 +15,7 @@ Then enter the directory containing lsmi with
 Finally run the install script by
 `sudo ./install.sh`
 
+</details>
 
 ### Usage
 #### Basic Usage
