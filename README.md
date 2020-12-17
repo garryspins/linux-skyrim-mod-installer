@@ -35,6 +35,7 @@ The help isnt actually help its just a bunch of random information, but to acces
 Used to set the version of Skyrim youre wanting to install the mods into
 ##### Options
 1 : Special Edition (default)
+
 2 : Original
 
 #### `LSMI_TEMP`
