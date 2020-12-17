@@ -5,12 +5,15 @@ Skyrim Mod installer for Linux
 
 ### Installation
 Open up a terminal and type
+
 `git clone https://github.com/garryspins/linux-skyrim-mod-installer.git`
 
 Then enter the directory containing lsmi with
+
 `cd linux-skyrim-mod-installer`
 
 Finally run the install script by
+
 `sudo ./install.sh`
 
 ---
@@ -31,21 +34,31 @@ The help isnt actually help its just a bunch of random information, but to acces
 ---
 
 ### Environment Variables
+
 #### `LSMI_VERSION`
+
 Used to set the version of Skyrim youre wanting to install the mods into
+
 ##### Options
+
 1 : Special Edition (default)
 
 2 : Original
 
 #### `LSMI_TEMP`
+
 Sets the temporary directory name to store files into when moving over files
+
 ##### Options
+
 `"~/.lsmi/"` : Default
+
 Any valid directory name is acceptable 
 
 #### `LSMI_DIRECTORY`
 Where to search for Skyrim
+
 `"~/.steam/steam/steamapps/common/"` : Default
+
 Any valid directory name is acceptable
 
