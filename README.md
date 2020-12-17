@@ -14,7 +14,7 @@ Then enter the directory containing lsmi with
 
 Finally run the install script by
 
-`sudo ./install.sh`
+`chmod +x ./install.sh; sudo ./install.sh`
 
 ---
 
